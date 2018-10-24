@@ -22,6 +22,7 @@ body {
 .app-messenger {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   .header {
     height: $header-height;
     display: flex;
@@ -79,6 +80,8 @@ body {
     }
     .content{
       flex-grow: 1;
+      overflow-y: auto;
+
     }
   }
 }
@@ -86,8 +89,11 @@ body {
 .messages {
   display: flex;
   flex-direction: column;
+  padding: 20px;
   .message {
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     margin: 15px 5px;
     .message-user-image {
       img {
@@ -102,9 +108,20 @@ body {
 
       }
       .message-text {
-        background: $primary-color;
+        background: $body-color;
+        color: #fff;
         padding: 10px;
         border-radius: 10px;
+      }
+    }
+
+    &.me {
+      justify-content: flex-start;
+      .message-body {
+        .message-text{
+          background: $primary-color;
+          color: #fff;
+        }
       }
     }
   }

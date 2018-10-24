@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
+
 import avatar from '../images/avartar.jpg';
 
 export default class Messenger extends Component {
@@ -7,9 +9,12 @@ export default class Messenger extends Component {
         super(props);
         this.state = {
             height:window.innerHeight,
+            messages: [],
         }
 
-        this._onResize = this._onResize.bind(this)
+        this._onResize = this._onResize.bind(this);
+
+        this.addTestMessages = this.addTestMessages.bind(this);
     }
 
     _onResize() {
@@ -19,8 +24,27 @@ export default class Messenger extends Component {
     }
 
     componentDidMount() {
-        console.log("Component did mount");
-        window.addEventListener('resize', this._onResize)
+        window.addEventListener('resize', this._onResize);
+        this.addTestMessages();
+    }
+
+    addTestMessages(){
+        let {messages} = this.state;
+        for (let i = 0; i < 100 ; i++) {
+            let isMe = false;
+            if (i % 2 === 0) {
+                isMe = true;
+            }
+            const newMsg = {
+                author: `Author: ${i}`,
+                body: `The body of message ${i}`,
+                avatar: avatar,
+                me: isMe,
+            };
+            messages.push(newMsg);
+        }
+
+        this.setState({messages: messages});
     }
 
     componentWillUnmount() {
@@ -30,11 +54,11 @@ export default class Messenger extends Component {
     }
 
     render() {
-        const {height} = this.state;
+        const {height, messages} = this.state;
         const style = {
             height:height,
         }
-
+        console.log(messages);
         return (
             <div style={style} className="app-messenger">
                 <div className="header">
@@ -55,33 +79,28 @@ export default class Messenger extends Component {
                     <div className="sidebar-left"> Left sidebar</div>
                     <div className="content">
                         <div className="messages">
-                            <div className="message">
-                                <div className="message-user-image">
-                                    <img src={avatar} alt="" />
-                                </div>
-                                <div className="message-body">
-                                    <div className="message-author"> Tom said:</div>
-                                    <div className="message-text">
-                                        <p>
-                                            Hello there ...
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div className="message">
-                                <div className="message-user-image">
-                                    <img src={avatar} alt="" />
-                                </div>
-                                <div className="message-body">
-                                    <div className="message-author"> You said:</div>
-                                    <div className="message-text">
-                                        <p>
-                                            I am here ...
-                                        </p>
+                            {messages.map((message, index) => {
+
+                                return (
+                                    <div key={index} className={classNames('message', {'me': message.me})}>
+                                        <div className="message-user-image">
+                                            <img src={message.avatar} alt="" />
+                                        </div>
+                                        <div className="message-body">
+                                            <div className="message-author"> {message.author} said:</div>
+                                            <div className="message-text">
+                                                <p>
+                                                    {message.body}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                )
+
+                            })}
+
+
                         </div>
                     </div>
                     <div className="sidebar-right"> Right sidebar</div>
