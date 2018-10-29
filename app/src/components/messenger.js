@@ -32,7 +32,7 @@ export default class Messenger extends Component {
         let {messages} = this.state;
         for (let i = 0; i < 100 ; i++) {
             let isMe = false;
-            if (i % 2 === 0) {
+            if (i % 3 === 0) {
                 isMe = true;
             }
             const newMsg = {
@@ -76,7 +76,29 @@ export default class Messenger extends Component {
                     </div>
                 </div>
                 <div className="main">
-                    <div className="sidebar-left"> Left sidebar</div>
+                    <div className="sidebar-left">
+                        <div className="chanels">
+                            <div className="chanel">
+                                <div className="user-image">
+                                    <img src={avatar} alt="" />
+                                </div>
+                                <div className="chanel-info">
+                                    <h2>Toan, Alexander</h2>
+                                    <p>Hello there...</p>
+                                </div>
+                            </div>
+
+                            <div className="chanel">
+                                <div className="user-image">
+                                    <img src={avatar} alt="" />
+                                </div>
+                                <div className="chanel-info">
+                                    <h2>Toan, Alexander</h2>
+                                    <p>Hello there...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="content">
                         <div className="messages">
 
@@ -99,10 +121,18 @@ export default class Messenger extends Component {
                                 )
 
                             })}
+                        </div>
 
-
+                        <div className="messages-input">
+                            <div className="text-input">
+                                <textarea placeholder="Write your messages..." />
+                            </div>
+                            <div className="actions">
+                                <button className="send">Send</button>
+                            </div>
                         </div>
                     </div>
+
                     <div className="sidebar-right"> Right sidebar</div>
                 </div>
             </div>
