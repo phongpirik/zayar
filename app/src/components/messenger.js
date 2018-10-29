@@ -133,7 +133,30 @@ export default class Messenger extends Component {
                         </div>
                     </div>
 
-                    <div className="sidebar-right"> Right sidebar</div>
+                    <div className="sidebar-right">
+                        <h2 className="title">Members</h2>
+                        <div className="members">
+                            <div className="member">
+                                <div className="user-image">
+                                    <img src={avatar} alt="" />
+                                </div>
+                                <div className="member-info">
+                                    <h2>Toan Nguyen Dinh</h2>
+                                    <p>Joined: 3 days ago.</p>
+                                </div>
+                            </div>
+
+                            <div className="member">
+                                <div className="user-image">
+                                    <img src={avatar} alt="" />
+                                </div>
+                                <div className="member-info">
+                                    <h2>Alexander</h2>
+                                    <p>Joined: 3 days ago.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

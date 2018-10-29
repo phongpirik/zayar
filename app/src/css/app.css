@@ -58,6 +58,8 @@ body {
     .app-messenger .main .sidebar-right {
       border-left: 1px solid rgba(0, 0, 0, 0.05);
       width: 300px; }
+      .app-messenger .main .sidebar-right .title {
+        padding: 10px; }
     .app-messenger .main .content {
       flex-grow: 1;
       overflow: hidden;
@@ -111,12 +113,43 @@ body {
         background: #2ecc71;
         color: #fff; }
 
-.chanels .chanel .user-image img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%; }
-.chanels .chanel .chanel-info h2 {
-  font-size: 14px;
-  font-weight: 600; }
+.chanels .chanel {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 5px; }
+  .chanels .chanel .user-image img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; }
+  .chanels .chanel .chanel-info {
+    flex-grow: 1;
+    padding-left: 8px; }
+    .chanels .chanel .chanel-info h2 {
+      font-size: 14px;
+      font-weight: 600; }
+    .chanels .chanel .chanel-info p {
+      font-size: 12px; }
+
+.members .member {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 5px; }
+  .members .member .user-image img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; }
+  .members .member .member-info {
+    flex-grow: 1;
+    padding-left: 8px; }
+    .members .member .member-info h2 {
+      font-size: 14px;
+      font-weight: 600; }
+    .members .member .member-info p {
+      font-size: 12px; }
+
+h2.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.8); }
 
 /*# sourceMappingURL=app.css.map */
