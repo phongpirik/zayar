@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 
 import avatar from '../images/avartar.jpg';
+import {OrderedMap} from 'immutable';
 
 export default class Messenger extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            height:window.innerHeight,
-            messages: [],
+            height: window.innerHeight,
         }
 
         this._onResize = this._onResize.bind(this);
@@ -19,7 +19,7 @@ export default class Messenger extends Component {
 
     _onResize() {
         this.setState({
-            height:window.innerHeight,
+            height: window.innerHeight,
         });
     }
 
@@ -28,9 +28,13 @@ export default class Messenger extends Component {
         this.addTestMessages();
     }
 
-    addTestMessages(){
-        let {messages} = this.state;
-        for (let i = 0; i < 100 ; i++) {
+    addTestMessages() {
+        const {store} = this.props;
+
+
+
+        //create test messages
+        for (let i = 0; i < 100; i++) {
             let isMe = false;
             if (i % 3 === 0) {
                 isMe = true;
@@ -41,10 +45,30 @@ export default class Messenger extends Component {
                 avatar: avatar,
                 me: isMe,
             };
-            messages.push(newMsg);
+            store.addMessage(i, newMsg);
+            // i need update my component and re-render it now because new messages added.
+
         }
 
-        this.setState({messages: messages});
+        //create some test channel
+        for (let c = 0; c < 10; c++) {
+            const newChannel = {
+                _id: c,
+                title: `Channel title ${c}`,
+                lastMessage: `Hey there here ... ${c}`,
+                members: new OrderedMap({
+                    2: true,
+                    3: true,
+                }),
+                messages: new OrderedMap({
+                    5: true,
+                    6: true,
+                    7: true,
+                }),
+            }
+            store.addChannel(c, newChannel)
+        }
+
     }
 
     componentWillUnmount() {
@@ -54,11 +78,17 @@ export default class Messenger extends Component {
     }
 
     render() {
-        const {height, messages} = this.state;
+        const {store} = this.props;
+        const {height} = this.state;
         const style = {
-            height:height,
+            height: height,
         }
-        console.log(messages);
+        const messages = store.getMessages();
+        const channels = store.getChannels();
+        const activeChannel = store.getActiveChannel();
+
+        console.log(activeChannel);
+
         return (
             <div style={style} className="app-messenger">
                 <div className="header">
@@ -71,32 +101,31 @@ export default class Messenger extends Component {
                     <div className="right">
                         <div className="user-bar">
                             <div className="profile-name">Thanh Phong Nguyen</div>
-                            <div className="profile-image"><img src={avatar} alt="" /></div>
+                            <div className="profile-image"><img src={avatar} alt=""/></div>
                         </div>
                     </div>
                 </div>
                 <div className="main">
                     <div className="sidebar-left">
                         <div className="chanels">
-                            <div className="chanel">
-                                <div className="user-image">
-                                    <img src={avatar} alt="" />
-                                </div>
-                                <div className="chanel-info">
-                                    <h2>Toan, Alexander</h2>
-                                    <p>Hello there...</p>
-                                </div>
-                            </div>
+                            {channels.map((channel, key) => {
+                                return (
 
-                            <div className="chanel">
-                                <div className="user-image">
-                                    <img src={avatar} alt="" />
-                                </div>
-                                <div className="chanel-info">
-                                    <h2>Toan, Alexander</h2>
-                                    <p>Hello there...</p>
-                                </div>
-                            </div>
+                                    <div onClick={(key) => {
+                                        store.setActiveChannelId(channel._id);
+
+                                    }} key={channel._id} className="chanel">
+                                        <div className="user-image">
+                                            <img src={avatar} alt=""/>
+                                        </div>
+                                        <div className="chanel-info">
+                                            <h2>{channel.title}</h2>
+                                            <p>{channel.lastMessage}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+
                         </div>
                     </div>
                     <div className="content">
@@ -107,7 +136,7 @@ export default class Messenger extends Component {
                                 return (
                                     <div key={index} className={classNames('message', {'me': message.me})}>
                                         <div className="message-user-image">
-                                            <img src={message.avatar} alt="" />
+                                            <img src={message.avatar} alt=""/>
                                         </div>
                                         <div className="message-body">
                                             <div className="message-author"> {message.author} said:</div>
@@ -125,7 +154,7 @@ export default class Messenger extends Component {
 
                         <div className="messages-input">
                             <div className="text-input">
-                                <textarea placeholder="Write your messages..." />
+                                <textarea placeholder="Write your messages..."/>
                             </div>
                             <div className="actions">
                                 <button className="send">Send</button>
@@ -138,7 +167,7 @@ export default class Messenger extends Component {
                         <div className="members">
                             <div className="member">
                                 <div className="user-image">
-                                    <img src={avatar} alt="" />
+                                    <img src={avatar} alt=""/>
                                 </div>
                                 <div className="member-info">
                                     <h2>Toan Nguyen Dinh</h2>
@@ -148,7 +177,7 @@ export default class Messenger extends Component {
 
                             <div className="member">
                                 <div className="user-image">
-                                    <img src={avatar} alt="" />
+                                    <img src={avatar} alt=""/>
                                 </div>
                                 <div className="member-info">
                                     <h2>Alexander</h2>
