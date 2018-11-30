@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import avatar from '../images/avartar.jpg';
 import {OrderedMap} from 'immutable';
 
+import _ from 'lodash';
+
 export default class Messenger extends Component {
 
     constructor(props) {
@@ -83,11 +85,15 @@ export default class Messenger extends Component {
         const style = {
             height: height,
         }
-        const messages = store.getMessages();
-        const channels = store.getChannels();
-        const activeChannel = store.getActiveChannel();
 
-        console.log(activeChannel);
+        const activeChannel = store.getActiveChannel();
+        const messages = store.getMessagesFromChannel(activeChannel); //store.getMessages();
+        const channels = store.getChannels();
+
+        if (activeChannel) {
+            console.log('Active channel is:',activeChannel);
+            console.log('Message in channel: ', activeChannel._id, messages);
+        }
 
         return (
             <div style={style} className="app-messenger">
@@ -133,6 +139,7 @@ export default class Messenger extends Component {
 
                             {messages.map((message, index) => {
 
+                                console.log(index,message);
                                 return (
                                     <div key={index} className={classNames('message', {'me': message.me})}>
                                         <div className="message-user-image">

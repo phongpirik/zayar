@@ -38,6 +38,20 @@ export default class Store{
         return this.messages.valueSeq();
     }
 
+    getMessagesFromChannel(channel) {
+        let messages = [];
+
+        if (channel) {
+            channel.messages.map((value, key) => {
+               console.log(value, key);
+
+               const message = this.messages.get(key);
+               messages.push()
+            });
+        }
+        return messages;
+    }
+
     addChannel(index, channel = {}) {
         this.channels = this.channels.set(index,channel);
         this.update();
